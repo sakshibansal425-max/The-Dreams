@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+
+<section class="section section-dark" style="padding-top: 140px;">
+  <div class="container">
+    <div class="section-heading">
+      <span class="kicker">STRATEGIC PREPARATION ROADMAP</span>
+      <h1>Preparation Levels 1 to 4</h1>
+      <p>A step-by-step progression hierarchy mapping basic NCERT foundation up to advanced competitive exam standards.</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 40px;">
+      <% if (prepLevels && prepLevels.length > 0) { %>
+        <% prepLevels.forEach(level => { %>
+          <div class="card" style="padding: 40px; border-left: 6px solid var(--color-accent);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;">
+              <div>
+                <span class="kicker" style="margin-bottom: 4px;">LEVEL <%= level.levelNumber %></span>
+                <h2 style="font-size: 1.8rem;"><%= level.levelName %></h2>
+              </div>
+              <span class="badge" style="font-size: 0.85rem; padding: 6px 16px;">Level <%= level.levelNumber %> Roadmap</span>
+            </div>
+
+            <p style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 24px; max-width: 900px;"><%= level.description %></p>
+
+            <!-- Mapped Exams Grid -->
+            <div style="border-top: 1px solid var(--color-border); padding-top: 24px;">
+              <h4 style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--color-accent); margin-bottom: 16px;">MAPPED EXAMS IN THIS LEVEL:</h4>
+
+              <% if (level.examPrepLevels && level.examPrepLevels.length > 0) { %>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+                  <% level.examPrepLevels.forEach(epl => { %>
+                    <div style="padding: 16px; background-color: var(--color-bg-secondary); border-radius: var(--radius-sm); border: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center;">
+                      <div>
+                        <strong style="font-size: 0.95rem; display: block;"><%= epl.exam.name %></strong>
+                        <span style="font-size: 0.75rem; color: var(--color-text-secondary);"><%= epl.exam.category %> • <%= epl.exam.minQualification %> Pass</span>
+                      </div>
+                      <a href="/exams/<%= epl.exam.code %>" class="btn btn-ghost" style="padding: 4px 8px; font-size: 0.8rem;">View &rarr;</a>
+                    </div>
+                  <% }) %>
+                </div>
+              <% } else { %>
+                <p style="font-size: 0.85rem; color: var(--color-text-secondary);">Exams currently being mapped to this level.</p>
+              <% } %>
+            </div>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

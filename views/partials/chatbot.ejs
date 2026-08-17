@@ -1,0 +1,28 @@
+<% if (locals.featureFlags && locals.featureFlags.chatbot_enabled) { %>
+  <!-- Sidebar Chatbot Widget -->
+  <div class="chatbot-widget">
+    <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open Exam Guidance Assistant">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </button>
+
+    <div id="chatbotPanel" class="chatbot-panel">
+      <div class="chatbot-header">
+        <h4>Exam Assistant</h4>
+        <button id="chatbotClose" style="background: none; border: none; color: var(--color-text-secondary); cursor: pointer; font-size: 1.2rem;">&times;</button>
+      </div>
+
+      <div id="chatbotBody" class="chatbot-body">
+        <div class="chat-msg bot">
+          Hello! I am your <strong>ExamSaathi Assistant</strong>. Ask me anything about exam eligibility, 12th pass exams, subjects, or book recommendations!
+        </div>
+      </div>
+
+      <div class="chatbot-footer">
+        <input type="text" id="chatbotInput" placeholder="Ask a question (e.g. 12th pass exams)...">
+        <button id="chatbotSend" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.8rem;">Send</button>
+      </div>
+    </div>
+  </div>
+<% } %>

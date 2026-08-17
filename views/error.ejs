@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+
+<section class="section section-dark" style="padding-top: 160px; min-height: 70vh; display: flex; align-items: center;">
+  <div class="container" style="max-width: 650px; text-align: center;">
+    <div class="card" style="padding: 48px;">
+      <div style="font-size: 3rem; margin-bottom: 16px; color: var(--color-accent);">⚠️</div>
+      <h1 style="font-size: 2rem; margin-bottom: 16px;"><%= typeof title !== 'undefined' ? title : 'An Error Occurred' %></h1>
+      <p style="margin-bottom: 32px;"><%= typeof message !== 'undefined' ? message : 'Something went wrong on our end.' %></p>
+      
+      <% if (typeof error !== 'undefined' && error) { %>
+        <pre style="background: var(--color-bg-secondary); padding: 16px; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.8rem; text-align: left; overflow-x: auto; margin-bottom: 32px; color: #ff6b6b;"><%= JSON.stringify(error, null, 2) %></pre>
+      <% } %>
+
+      <a href="/" class="btn btn-primary">&larr; Return to Home Page</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

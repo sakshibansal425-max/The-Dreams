@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Exam {
+  id               Int               @id @default(autoincrement())
+  name             String
+  code             String            @unique
+  category         String            // SSC, UPSC, RRB, IBPS, State, Police
+  minQualification String            // 10th, 12th, Graduation
+  frequency        String            // Annual, Bi-Annual, Notification-based
+  description      String
+  officialLink     String?
+  isActive         Boolean           @default(true)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  
+  examSubjects     ExamSubject[]
+  examPrepLevels   ExamPrepLevel[]
+  examPosts        ExamPost[]
+  examPatterns     ExamPattern[]
+}
+
+model Subject {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  description  String?
+  examSubjects ExamSubject[]
+  subjectBooks SubjectBook[]
+}
+
+model Book {
+  id           Int           @id @default(autoincrement())
+  title        String
+  author       String?
+  link         String?
+  subjectBooks SubjectBook[]
+}
+
+model ExamSubject {
+  id        Int     @id @default(autoincrement())
+  examId    Int
+  subjectId Int
+  exam      Exam    @relation(fields: [examId], references: [id], onDelete: Cascade)
+  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+  @@unique([examId, subjectId])
+}
+
+model SubjectBook {
+  id        Int     @id @default(autoincrement())
+  subjectId Int
+  bookId    Int
+  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  book      Book    @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  @@unique([subjectId, bookId])
+}
+
+model PrepLevel {
+  id             Int             @id @default(autoincrement())
+  levelNumber    Int             @unique // 1, 2, 3, 4
+  levelName      String          // Foundation, 12th Level, Graduation Level, Advanced
+  description    String
+  examPrepLevels ExamPrepLevel[]
+}
+
+model ExamPrepLevel {
+  id          Int       @id @default(autoincrement())
+  examId      Int
+  prepLevelId Int
+  exam        Exam      @relation(fields: [examId], references: [id], onDelete: Cascade)
+  prepLevel   PrepLevel @relation(fields: [prepLevelId], references: [id], onDelete: Cascade)
+
+  @@unique([examId, prepLevelId])
+}
+
+model ExamPost {
+  id        Int    @id @default(autoincrement())
+  examId    Int
+  postName  String
+  postLevel String // Group A, Group B, Group C, Group D
+  exam      Exam   @relation(fields: [examId], references: [id], onDelete: Cascade)
+}
+
+model ExamPattern {
+  id         Int    @id @default(autoincrement())
+  examId     Int
+  stageName  String // Tier 1, Tier 2, PET, Interview, etc.
+  stageOrder Int
+  exam       Exam   @relation(fields: [examId], references: [id], onDelete: Cascade)
+}
+
+model ContactSubmission {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  subject     String
+  message     String
+  isRead      Boolean  @default(false)
+  isArchived  Boolean  @default(false)
+  submittedAt DateTime @default(now())
+}
+
+model AdminUser {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  passwordHash String
+  name         String    @default("Sakshi Bansal")
+  lastLogin    DateTime?
+  createdAt    DateTime  @default(now())
+}
+
+model FeatureFlag {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique
+  enabled     Boolean  @default(true)
+  description String?
+  updatedAt   DateTime @updatedAt
+}

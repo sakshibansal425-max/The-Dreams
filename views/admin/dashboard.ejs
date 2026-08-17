@@ -1,0 +1,97 @@
+<%- include('../partials/header') %>
+
+<section class="section section-dark" style="padding-top: 130px;">
+  <div class="container">
+    <!-- Admin Header Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border); flex-wrap: wrap; gap: 16px;">
+      <div>
+        <span class="kicker">PROTECTED ADMIN PANEL</span>
+        <h1>Welcome, <%= adminUser ? adminUser.name : 'Sakshi' %></h1>
+      </div>
+
+      <div style="display: flex; gap: 12px;">
+        <a href="/admin/submissions" class="btn btn-secondary" style="font-size: 0.85rem;">Manage Submissions</a>
+        <a href="/admin/exams" class="btn btn-secondary" style="font-size: 0.85rem;">Manage Exams</a>
+        <a href="/admin/feature-flags" class="btn btn-secondary" style="font-size: 0.85rem;">Feature Flags</a>
+        <a href="/admin/logout" class="btn btn-ghost" style="color: #ff6b6b; font-size: 0.85rem;">Log Out</a>
+      </div>
+    </div>
+
+    <!-- Stat Cards Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-bottom: 48px;">
+      <div class="card" style="padding: 24px;">
+        <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--color-text-secondary);">TOTAL SUBMISSIONS</span>
+        <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-accent); margin-top: 8px;"><%= stats.totalSubmissions %></div>
+      </div>
+
+      <div class="card" style="padding: 24px;">
+        <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--color-text-secondary);">UNREAD INQUIRIES</span>
+        <div style="font-size: 2.5rem; font-weight: bold; color: <%= stats.unreadSubmissions > 0 ? '#C9A15A' : 'var(--color-text-primary)' %>; margin-top: 8px;"><%= stats.unreadSubmissions %></div>
+      </div>
+
+      <div class="card" style="padding: 24px;">
+        <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--color-text-secondary);">TOTAL EXAMS IN DB</span>
+        <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-text-primary); margin-top: 8px;"><%= stats.totalExams %></div>
+      </div>
+
+      <div class="card" style="padding: 24px;">
+        <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--color-text-secondary);">ACTIVE FEATURE FLAGS</span>
+        <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-accent); margin-top: 8px;"><%= stats.activeFeatureFlags %></div>
+      </div>
+    </div>
+
+    <!-- Recent Submissions Table -->
+    <div class="card" style="padding: 32px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h3 style="font-size: 1.25rem;">Recent Contact Form Inquiries</h3>
+        <a href="/admin/submissions" class="btn btn-ghost" style="font-size: 0.85rem;">View All Submissions &rarr;</a>
+      </div>
+
+      <% if (recentSubmissions && recentSubmissions.length > 0) { %>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.8rem; font-family: var(--font-mono);">
+                <th style="padding: 12px;">STATUS</th>
+                <th style="padding: 12px;">NAME</th>
+                <th style="padding: 12px;">EMAIL</th>
+                <th style="padding: 12px;">SUBJECT</th>
+                <th style="padding: 12px;">SUBMITTED AT</th>
+                <th style="padding: 12px; text-align: right;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% recentSubmissions.forEach(sub => { %>
+                <tr style="border-bottom: 1px solid var(--color-border); font-weight: <%= !sub.isRead ? 'bold' : 'normal' %>;">
+                  <td style="padding: 16px 12px;">
+                    <% if (!sub.isRead) { %>
+                      <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: var(--color-accent); margin-right: 6px;"></span>
+                      <span style="color: var(--color-accent); font-size: 0.75rem;">UNREAD</span>
+                    <% } else { %>
+                      <span style="color: var(--color-text-secondary); font-size: 0.75rem;">READ</span>
+                    <% } %>
+                  </td>
+                  <td style="padding: 16px 12px;"><%= sub.name %></td>
+                  <td style="padding: 16px 12px; font-family: var(--font-mono); font-size: 0.85rem;"><%= sub.email %></td>
+                  <td style="padding: 16px 12px;"><%= sub.subject %></td>
+                  <td style="padding: 16px 12px; font-size: 0.8rem; color: var(--color-text-secondary);"><%= new Date(sub.submittedAt).toLocaleDateString() %></td>
+                  <td style="padding: 16px 12px; text-align: right;">
+                    <form action="/admin/submissions/<%= sub.id %>/toggle-read" method="POST" style="display: inline;">
+                      <button type="submit" class="btn btn-ghost" style="padding: 4px 8px; font-size: 0.75rem;">
+                        <%= sub.isRead ? 'Mark Unread' : 'Mark Read' %>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } else { %>
+        <p style="color: var(--color-text-secondary); text-align: center; padding: 32px 0;">No contact form submissions recorded yet.</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

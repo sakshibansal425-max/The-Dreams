@@ -1,0 +1,81 @@
+<%- include('partials/header') %>
+
+<section class="section section-dark" style="padding-top: 140px;">
+  <div class="container">
+    <div class="section-heading">
+      <span class="kicker">REACH OUT TO US</span>
+      <h1>Contact & Student Guidance</h1>
+      <p>Have doubts about exam eligibility, book choices, or state police requirements? Send a message directly to Sakshi.</p>
+    </div>
+
+    <!-- Alert / Toast Banner -->
+    <% if (typeof submitted !== 'undefined' && submitted) { %>
+      <div class="card" style="margin-bottom: 32px; background-color: rgba(var(--color-accent-rgb), 0.15); border-color: var(--color-accent); padding: 20px; text-align: center;">
+        <h3 style="color: var(--color-accent); margin-bottom: 8px;">✅ Message Sent Successfully!</h3>
+        <p>Thank you for reaching out. Sakshi will review your query and get back to you shortly.</p>
+      </div>
+    <% } %>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="card" style="margin-bottom: 32px; background-color: rgba(220, 53, 69, 0.15); border-color: #dc3545; padding: 20px; text-align: center;">
+        <h3 style="color: #ff6b6b; margin-bottom: 8px;">⚠️ Submission Error</h3>
+        <p><%= error %></p>
+      </div>
+    <% } %>
+
+    <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 48px;">
+      <!-- Contact Form -->
+      <div class="card" style="padding: 40px;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 24px;">Send a Direct Query</h2>
+        
+        <form action="/contact" method="POST">
+          <!-- Honeypot Field for Spam Protection -->
+          <div style="display: none;">
+            <label for="honeypot">Leave this blank</label>
+            <input type="text" id="honeypot" name="honeypot" autocomplete="off">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="name">Your Name *</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address *</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="e.g. rahul@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="subject">Subject / Exam Concern *</label>
+            <input type="text" id="subject" name="subject" class="form-control" placeholder="e.g. SSC CHSL Eligibility Query" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="message">Detailed Message *</label>
+            <textarea id="message" name="message" class="form-control" placeholder="Write your question or feedback here..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Guidance Inquiry &rarr;</button>
+        </form>
+      </div>
+
+      <!-- Direct Contact Info -->
+      <div>
+        <div class="card" style="margin-bottom: 24px; padding: 32px;">
+          <h3 style="font-size: 1.2rem; color: var(--color-accent); margin-bottom: 16px;">Direct Email</h3>
+          <p style="font-size: 0.95rem; margin-bottom: 12px;">You can also reach Sakshi directly via email for questions or developer networking:</p>
+          <a href="mailto:sakshibansal425@gmail.com" style="font-family: var(--font-mono); color: var(--color-accent); font-size: 0.9rem;">sakshibansal425@gmail.com</a>
+        </div>
+
+        <div class="card" style="padding: 32px;">
+          <h3 style="font-size: 1.2rem; color: var(--color-accent); margin-bottom: 16px;">Response Time</h3>
+          <p style="font-size: 0.9rem; line-height: 1.6;">
+            Submissions are stored securely in our SQLite database and reviewed daily in the Admin Portal. You will receive an email response within 24–48 hours.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

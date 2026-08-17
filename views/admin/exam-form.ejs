@@ -1,0 +1,92 @@
+<%- include('../partials/header') %>
+
+<section class="section section-dark" style="padding-top: 130px;">
+  <div class="container" style="max-width: 800px;">
+    <div style="margin-bottom: 24px;">
+      <a href="/admin/exams" class="btn btn-ghost" style="padding-left: 0;">&larr; Back to Exam List</a>
+    </div>
+
+    <div class="card" style="padding: 40px;">
+      <h1 style="font-size: 1.8rem; margin-bottom: 24px;"><%= exam ? 'Edit Exam: ' + exam.name : 'Add New Exam Entry' %></h1>
+
+      <form action="<%= exam ? '/admin/exams/' + exam.id + '/edit' : '/admin/exams/new' %>" method="POST">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="form-group">
+            <label class="form-label" for="name">Exam Name *</label>
+            <input type="text" id="name" name="name" class="form-control" value="<%= exam ? exam.name : '' %>" placeholder="e.g. SSC CGL 2026" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="code">Unique Exam Code *</label>
+            <input type="text" id="code" name="code" class="form-control" value="<%= exam ? exam.code : '' %>" placeholder="e.g. SSC-CGL" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+          <div class="form-group">
+            <label class="form-label" for="category">Category *</label>
+            <select name="category" id="category" class="form-control" required>
+              <option value="SSC" <%= exam && exam.category === 'SSC' ? 'selected' : '' %>>SSC</option>
+              <option value="UPSC" <%= exam && exam.category === 'UPSC' ? 'selected' : '' %>>UPSC</option>
+              <option value="RRB" <%= exam && exam.category === 'RRB' ? 'selected' : '' %>>RRB</option>
+              <option value="IBPS" <%= exam && exam.category === 'IBPS' ? 'selected' : '' %>>IBPS</option>
+              <option value="Police" <%= exam && exam.category === 'Police' ? 'selected' : '' %>>Police</option>
+              <option value="State" <%= exam && exam.category === 'State' ? 'selected' : '' %>>State</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="minQualification">Qualification *</label>
+            <select name="minQualification" id="minQualification" class="form-control" required>
+              <option value="10th" <%= exam && exam.minQualification === '10th' ? 'selected' : '' %>>10th</option>
+              <option value="12th" <%= exam && exam.minQualification === '12th' ? 'selected' : '' %>>12th</option>
+              <option value="Graduation" <%= exam && exam.minQualification === 'Graduation' ? 'selected' : '' %>>Graduation</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="frequency">Frequency *</label>
+            <input type="text" id="frequency" name="frequency" class="form-control" value="<%= exam ? exam.frequency : 'Annual' %>" placeholder="e.g. Annual" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="prepLevelId">Mapped Preparation Level</label>
+          <select name="prepLevelId" id="prepLevelId" class="form-control">
+            <% if (typeof prepLevels !== 'undefined' && prepLevels.length > 0) { %>
+              <% prepLevels.forEach(pl => { %>
+                <option value="<%= pl.id %>" <%= exam && exam.examPrepLevels && exam.examPrepLevels.some(epl => epl.prepLevelId === pl.id) ? 'selected' : '' %>>
+                  Level <%= pl.levelNumber %>: <%= pl.levelName %>
+                </option>
+              <% }) %>
+            <% } %>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="description">Exam Description *</label>
+          <textarea id="description" name="description" class="form-control" rows="4" required><%= exam ? exam.description : '' %></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="officialLink">Official Portal URL (Optional)</label>
+          <input type="url" id="officialLink" name="officialLink" class="form-control" value="<%= exam ? exam.officialLink : '' %>" placeholder="https://">
+        </div>
+
+        <% if (exam) { %>
+          <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 16px;">
+            <input type="checkbox" id="isActive" name="isActive" <%= exam.isActive ? 'checked' : '' %>>
+            <label for="isActive" style="font-size: 0.9rem; cursor: pointer;">Exam is Active (Visible on public directory)</label>
+          </div>
+        <% } %>
+
+        <div style="margin-top: 32px; display: flex; gap: 16px;">
+          <button type="submit" class="btn btn-primary"><%= exam ? 'Update Exam' : 'Create Exam Entry' %> &rarr;</button>
+          <a href="/admin/exams" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'The Dreams — Government Exam Prep Guide' %></title>
+  <meta name="description" content="Premium monochromatic guide for 10th, 12th pass and graduate students preparing for Indian government exams (SSC, UPSC, Railways, Banking, Punjab Police, PPSC, PSSSB).">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+  <% if (typeof gaMeasurementId !== 'undefined' && gaMeasurementId && gaMeasurementId !== 'G-MEASUREMENT_ID_PLACEHOLDER') { %>
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= gaMeasurementId %>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<%= gaMeasurementId %>');
+    </script>
+  <% } %>
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="/" class="brand-logo">
+        THE <span>DREAMS</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/" class="<%= currentPage === 'home' ? 'active' : '' %>">Home</a></li>
+          <li><a href="/exams" class="<%= currentPage === 'exams' ? 'active' : '' %>">Exams Directory</a></li>
+          <li><a href="/prep-levels" class="<%= currentPage === 'prep-levels' ? 'active' : '' %>">Prep Levels</a></li>
+          <li><a href="/services" class="<%= currentPage === 'services' ? 'active' : '' %>">Services</a></li>
+          <li><a href="/about" class="<%= currentPage === 'about' ? 'active' : '' %>">About Us</a></li>
+          <li><a href="/about-me" class="<%= currentPage === 'about-me' ? 'active' : '' %>">About Me</a></li>
+          <li><a href="/contact" class="btn btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>

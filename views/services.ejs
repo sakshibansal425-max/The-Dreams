@@ -1,0 +1,81 @@
+<%- include('partials/header') %>
+
+<section class="section section-dark" style="padding-top: 140px;">
+  <div class="container">
+    <div class="section-heading">
+      <span class="kicker">PLATFORM OFFERINGS</span>
+      <h1>Services & Preparation Tools</h1>
+      <p>Everything you need to plan, structure, and execute your government exam preparation strategy.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;">
+      <!-- Active Module 1 -->
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span class="badge">ACTIVE MODULE</span>
+          <span style="font-size: 1.5rem; color: var(--color-accent);">📑</span>
+        </div>
+        <h3 style="margin-bottom: 12px;">Exam Directory</h3>
+        <p style="margin-bottom: 24px;">Structured listings for SSC, UPSC, RRB, IBPS, and Punjab Police. Filter by qualification (10th/12th/Graduation) and exam category.</p>
+        <a href="/exams" class="btn btn-secondary" style="width: 100%;">Browse Directory &rarr;</a>
+      </div>
+
+      <!-- Active Module 2 -->
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span class="badge">ACTIVE MODULE</span>
+          <span style="font-size: 1.5rem; color: var(--color-accent);">📊</span>
+        </div>
+        <h3 style="margin-bottom: 12px;">Preparation Levels Map</h3>
+        <p style="margin-bottom: 24px;">Level 1 to Level 4 roadmap guiding students from basic NCERT foundation building up to advanced civil services standard.</p>
+        <a href="/prep-levels" class="btn btn-secondary" style="width: 100%;">Explore Prep Levels &rarr;</a>
+      </div>
+
+      <!-- Active Module 3 -->
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span class="badge">ACTIVE MODULE</span>
+          <span style="font-size: 1.5rem; color: var(--color-accent);">📖</span>
+        </div>
+        <h3 style="margin-bottom: 12px;">Recommended Books</h3>
+        <p style="margin-bottom: 24px;">Subject-by-subject curated book recommendations by trusted authors (RS Aggarwal, SP Bakshi, Lucent GK, Laxmikanth).</p>
+        <a href="/exams" class="btn btn-secondary" style="width: 100%;">View Book Catalogs &rarr;</a>
+      </div>
+
+      <!-- Active Module 4 -->
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span class="badge">ACTIVE MODULE</span>
+          <span style="font-size: 1.5rem; color: var(--color-accent);">💬</span>
+        </div>
+        <h3 style="margin-bottom: 12px;">Sidebar Chatbot Assistant</h3>
+        <p style="margin-bottom: 24px;">Instant rule-based FAQ assistant available 24/7 on every page to answer eligibility doubts and suggest starting steps.</p>
+        <button onclick="document.getElementById('chatbotToggle').click();" class="btn btn-secondary" style="width: 100%;">Launch Assistant &rarr;</button>
+      </div>
+
+      <!-- Future Module Teaser 1 -->
+      <div class="card" style="opacity: 0.75; border-style: dashed;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span class="badge badge-outline" style="border-color: var(--color-accent); color: var(--color-accent);">COMING SOON</span>
+          <span style="font-size: 1.5rem; opacity: 0.5;">✏️</span>
+        </div>
+        <h3 style="margin-bottom: 12px;">Mock Test Engine</h3>
+        <p style="margin-bottom: 24px;">Timed online practice quizzes and previous year question papers for SSC CHSL, CGL, and Punjab Police Constable.</p>
+        <button class="btn btn-secondary" disabled style="width: 100%; opacity: 0.5; cursor: not-allowed;">Phase 8+ Backlog</button>
+      </div>
+
+      <!-- Future Module Teaser 2 -->
+      <div class="card" style="opacity: 0.75; border-style: dashed;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span class="badge badge-outline" style="border-color: var(--color-accent); color: var(--color-accent);">COMING SOON</span>
+          <span style="font-size: 1.5rem; opacity: 0.5;">📰</span>
+        </div>
+        <h3 style="margin-bottom: 12px;">Daily Current Affairs</h3>
+        <p style="margin-bottom: 24px;">Daily curated news digest and state-specific current affairs focus for Punjab PPSC and national level banking exams.</p>
+        <button class="btn btn-secondary" disabled style="width: 100%; opacity: 0.5; cursor: not-allowed;">Phase 8+ Backlog</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

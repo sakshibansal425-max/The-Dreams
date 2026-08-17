@@ -1,0 +1,135 @@
+<%- include('partials/header') %>
+
+<section class="section section-dark" style="padding-top: 140px;">
+  <div class="container">
+    <div style="margin-bottom: 24px;">
+      <a href="/exams" class="btn btn-ghost" style="padding-left: 0;">&larr; Back to Exam Directory</a>
+    </div>
+
+    <!-- Exam Header Banner -->
+    <div class="card" style="padding: 40px; margin-bottom: 48px; border-left: 4px solid var(--color-accent);">
+      <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+        <span class="badge"><%= exam.category %></span>
+        <span class="badge badge-outline"><%= exam.minQualification %> Pass</span>
+        <span class="badge badge-outline" style="border-color: var(--color-accent); color: var(--color-accent);"><%= exam.frequency %></span>
+      </div>
+
+      <h1 style="font-size: 2.25rem; margin-bottom: 12px;"><%= exam.name %></h1>
+      <p style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--color-accent); margin-bottom: 20px;">CODE: <%= exam.code %></p>
+      <p style="font-size: 1.05rem; line-height: 1.7; max-width: 900px;"><%= exam.description %></p>
+
+      <% if (exam.officialLink) { %>
+        <div style="margin-top: 24px;">
+          <a href="<%= exam.officialLink %>" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.85rem; padding: 8px 16px;">
+            Official Portal Link &UpperRightArrow;
+          </a>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Main Content Layout Grid -->
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 48px;">
+      <div>
+        <!-- Selection Stage Pattern -->
+        <div class="card" style="margin-bottom: 32px;">
+          <h2 style="font-size: 1.5rem; margin-bottom: 20px; color: var(--color-accent);">Standard Selection Pattern</h2>
+          <% if (exam.examPatterns && exam.examPatterns.length > 0) { %>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <% exam.examPatterns.forEach(stage => { %>
+                <div style="display: flex; gap: 16px; align-items: center; padding: 16px; background-color: var(--color-bg-secondary); border-radius: var(--radius-sm); border-left: 3px solid var(--color-accent);">
+                  <div style="font-family: var(--font-mono); font-size: 1.1rem; color: var(--color-accent); font-weight: bold;">0<%= stage.stageOrder %></div>
+                  <div style="font-size: 0.95rem;"><%= stage.stageName %></div>
+                </div>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <p>Single-stage computer-based competitive examination.</p>
+          <% } %>
+        </div>
+
+        <!-- Posts Offered -->
+        <div class="card" style="margin-bottom: 32px;">
+          <h2 style="font-size: 1.5rem; margin-bottom: 20px; color: var(--color-accent);">Recruiting Posts</h2>
+          <% if (exam.examPosts && exam.examPosts.length > 0) { %>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+              <% exam.examPosts.forEach(post => { %>
+                <div style="padding: 14px; background-color: var(--color-bg-secondary); border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
+                  <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 4px;"><%= post.postName %></div>
+                  <span class="badge badge-outline" style="font-size: 0.7rem;"><%= post.postLevel %></span>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Subjects & Recommended Books -->
+        <div class="card">
+          <h2 style="font-size: 1.5rem; margin-bottom: 20px; color: var(--color-accent);">Subjects & Curated Books</h2>
+          <% if (exam.examSubjects && exam.examSubjects.length > 0) { %>
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+              <% exam.examSubjects.forEach(es => { %>
+                <div style="padding: 20px; background-color: var(--color-bg-secondary); border-radius: var(--radius-sm); border: 1px solid var(--color-border);">
+                  <h3 style="font-size: 1.15rem; margin-bottom: 8px;"><%= es.subject.name %></h3>
+                  <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin-bottom: 16px;"><%= es.subject.description %></p>
+                  
+                  <% if (es.subject.subjectBooks && es.subject.subjectBooks.length > 0) { %>
+                    <div style="border-top: 1px dashed var(--color-border); padding-top: 12px;">
+                      <span style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--color-accent); display: block; margin-bottom: 8px;">RECOMMENDED BOOKS:</span>
+                      <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+                        <% es.subject.subjectBooks.forEach(sb => { %>
+                          <li style="font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center;">
+                            <span>📖 <strong><%= sb.book.title %></strong> <% if (sb.book.author) { %>by <%= sb.book.author %><% } %></span>
+                            <% if (sb.book.link) { %>
+                              <a href="<%= sb.book.link %>" target="_blank" rel="noopener" style="font-size: 0.75rem; color: var(--color-accent);">Buy / View &UpperRightArrow;</a>
+                            <% } %>
+                          </li>
+                        <% }) %>
+                      </ul>
+                    </div>
+                  <% } %>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Right Sidebar Sidebar sticky summary -->
+      <div>
+        <div class="card" style="position: sticky; top: 100px;">
+          <h3 style="font-size: 1.1rem; margin-bottom: 16px; border-bottom: 1px solid var(--color-border); padding-bottom: 12px;">Quick Summary</h3>
+          
+          <div style="display: flex; flex-direction: column; gap: 16px; font-size: 0.9rem;">
+            <div>
+              <span style="color: var(--color-text-secondary); display: block; font-size: 0.8rem;">QUALIFICATION:</span>
+              <strong><%= exam.minQualification %> Pass</strong>
+            </div>
+
+            <div>
+              <span style="color: var(--color-text-secondary); display: block; font-size: 0.8rem;">CATEGORY:</span>
+              <strong><%= exam.category %></strong>
+            </div>
+
+            <div>
+              <span style="color: var(--color-text-secondary); display: block; font-size: 0.8rem;">FREQUENCY:</span>
+              <strong><%= exam.frequency %></strong>
+            </div>
+
+            <% if (exam.examPrepLevels && exam.examPrepLevels.length > 0) { %>
+              <div>
+                <span style="color: var(--color-text-secondary); display: block; font-size: 0.8rem;">RECOMMENDED PREP LEVEL:</span>
+                <span class="badge" style="margin-top: 4px;"><%= exam.examPrepLevels[0].prepLevel.levelName %> (Level <%= exam.examPrepLevels[0].prepLevel.levelNumber %>)</span>
+              </div>
+            <% } %>
+
+            <div style="border-top: 1px solid var(--color-border); padding-top: 16px; margin-top: 8px;">
+              <a href="/contact" class="btn btn-primary" style="width: 100%; text-align: center;">Ask a Question &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

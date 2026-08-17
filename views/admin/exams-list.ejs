@@ -1,0 +1,73 @@
+<%- include('../partials/header') %>
+
+<section class="section section-dark" style="padding-top: 130px;">
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <span class="kicker">ADMINISTRATION</span>
+        <h1>Manage Exam Database</h1>
+      </div>
+
+      <div style="display: flex; gap: 12px;">
+        <a href="/admin/dashboard" class="btn btn-secondary" style="font-size: 0.85rem;">&larr; Dashboard</a>
+        <a href="/admin/exams/new" class="btn btn-primary" style="font-size: 0.85rem;">+ Add New Exam</a>
+      </div>
+    </div>
+
+    <% if (typeof message !== 'undefined' && message) { %>
+      <div class="card" style="margin-bottom: 24px; background-color: rgba(var(--color-accent-rgb), 0.15); border-color: var(--color-accent); padding: 16px; text-align: center; color: var(--color-accent);">
+        <%= message %>
+      </div>
+    <% } %>
+
+    <div class="card" style="padding: 32px;">
+      <% if (exams && exams.length > 0) { %>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--color-border); color: var(--color-text-secondary); font-size: 0.8rem; font-family: var(--font-mono);">
+                <th style="padding: 12px;">CODE</th>
+                <th style="padding: 12px;">NAME</th>
+                <th style="padding: 12px;">CATEGORY</th>
+                <th style="padding: 12px;">QUALIFICATION</th>
+                <th style="padding: 12px;">FREQUENCY</th>
+                <th style="padding: 12px;">STATUS</th>
+                <th style="padding: 12px; text-align: right;">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% exams.forEach(exam => { %>
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <td style="padding: 16px 12px; font-family: var(--font-mono); color: var(--color-accent);"><%= exam.code %></td>
+                  <td style="padding: 16px 12px; font-weight: 600;"><%= exam.name %></td>
+                  <td style="padding: 16px 12px;"><span class="badge"><%= exam.category %></span></td>
+                  <td style="padding: 16px 12px;"><%= exam.minQualification %> Pass</td>
+                  <td style="padding: 16px 12px; color: var(--color-text-secondary);"><%= exam.frequency %></td>
+                  <td style="padding: 16px 12px;">
+                    <% if (exam.isActive) { %>
+                      <span style="color: #4cd964; font-size: 0.8rem;">● Active</span>
+                    <% } else { %>
+                      <span style="color: var(--color-text-secondary); font-size: 0.8rem;">○ Inactive</span>
+                    <% } %>
+                  </td>
+                  <td style="padding: 16px 12px; text-align: right;">
+                    <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                      <a href="/admin/exams/<%= exam.id %>/edit" class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;">Edit</a>
+                      <form action="/admin/exams/<%= exam.id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this exam?');" style="display: inline;">
+                        <button type="submit" class="btn btn-ghost" style="padding: 4px 8px; font-size: 0.75rem; color: #ff6b6b;">Delete</button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } else { %>
+        <p style="text-align: center; padding: 48px 0; color: var(--color-text-secondary);">No exams found in database.</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>
