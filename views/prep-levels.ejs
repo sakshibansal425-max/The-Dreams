@@ -1,50 +1,61 @@
 <%- include('partials/header') %>
 
-<section class="section section-dark" style="padding-top: 140px;">
+<section class="section section-dark" style="padding-top: 140px; padding-bottom: 80px;">
   <div class="container">
     <div class="section-heading">
       <span class="kicker">STRATEGIC PREPARATION ROADMAP</span>
-      <h1>Preparation Levels 1 to 4</h1>
-      <p>A step-by-step progression hierarchy mapping basic NCERT foundation up to advanced competitive exam standards.</p>
+      <h1>Preparation Levels 1–4</h1>
+      <p style="font-size: 1.05rem;">A step-by-step progression hierarchy guiding aspirants from basic NCERT foundations up to advanced civil services standard.</p>
     </div>
 
-    <div style="display: flex; flex-direction: column; gap: 40px;">
+    <!-- Level Timeline -->
+    <div style="display: flex; flex-direction: column; gap: 24px;">
       <% if (prepLevels && prepLevels.length > 0) { %>
-        <% prepLevels.forEach(level => { %>
-          <div class="card" style="padding: 40px; border-left: 6px solid var(--color-accent);">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;">
+        <% prepLevels.forEach((level, idx) => { %>
+          <div class="card" style="padding: 40px; border-left: 5px solid var(--color-accent);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
               <div>
-                <span class="kicker" style="margin-bottom: 4px;">LEVEL <%= level.levelNumber %></span>
-                <h2 style="font-size: 1.8rem;"><%= level.levelName %></h2>
+                <span class="kicker" style="margin-bottom: 6px; display: block;">LEVEL <%= level.levelNumber %></span>
+                <h2 style="font-size: clamp(1.35rem, 2.5vw, 1.75rem);"><%= level.levelName %></h2>
               </div>
-              <span class="badge" style="font-size: 0.85rem; padding: 6px 16px;">Level <%= level.levelNumber %> Roadmap</span>
+              <span class="badge" style="font-size: 0.75rem; padding: 5px 14px; align-self: flex-start;">Level <%= level.levelNumber %></span>
             </div>
 
-            <p style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 24px; max-width: 900px;"><%= level.description %></p>
+            <p style="font-size: 0.975rem; line-height: 1.75; margin-bottom: 28px; max-width: 820px; color: var(--color-text-secondary);"><%= level.description %></p>
 
-            <!-- Mapped Exams Grid -->
+            <!-- Mapped Exams -->
             <div style="border-top: 1px solid var(--color-border); padding-top: 24px;">
-              <h4 style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--color-accent); margin-bottom: 16px;">MAPPED EXAMS IN THIS LEVEL:</h4>
+              <p style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 16px;">Mapped Exams in This Level</p>
 
               <% if (level.examPrepLevels && level.examPrepLevels.length > 0) { %>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px;">
                   <% level.examPrepLevels.forEach(epl => { %>
-                    <div style="padding: 16px; background-color: var(--color-bg-secondary); border-radius: var(--radius-sm); border: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center;">
-                      <div>
-                        <strong style="font-size: 0.95rem; display: block;"><%= epl.exam.name %></strong>
-                        <span style="font-size: 0.75rem; color: var(--color-text-secondary);"><%= epl.exam.category %> • <%= epl.exam.minQualification %> Pass</span>
+                    <div style="padding: 14px 16px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center; gap: 12px; transition: border-color var(--transition-fast);">
+                      <div style="min-width: 0;">
+                        <p style="font-size: 0.875rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= epl.exam.name %></p>
+                        <p style="font-size: 0.72rem; color: var(--color-text-muted);"><%= epl.exam.category %> · <%= epl.exam.minQualification %> Pass</p>
                       </div>
-                      <a href="/exams/<%= epl.exam.code %>" class="btn btn-ghost" style="padding: 4px 8px; font-size: 0.8rem;">View &rarr;</a>
+                      <a href="/exams/<%= epl.exam.code %>" class="btn btn-ghost" style="padding: 4px 10px; font-size: 0.75rem; flex-shrink: 0;">View &rarr;</a>
                     </div>
                   <% }) %>
                 </div>
               <% } else { %>
-                <p style="font-size: 0.85rem; color: var(--color-text-secondary);">Exams currently being mapped to this level.</p>
+                <p style="font-size: 0.875rem; color: var(--color-text-muted);">Exams being mapped to this level.</p>
               <% } %>
             </div>
           </div>
         <% }) %>
       <% } %>
+    </div>
+
+    <!-- CTA at bottom -->
+    <div class="card" style="margin-top: 40px; padding: 36px; text-align: center; background: var(--color-accent-subtle); border-color: rgba(var(--color-accent-rgb), 0.2);">
+      <h3 style="margin-bottom: 10px;">Not sure which level to start from?</h3>
+      <p style="margin-bottom: 24px; max-width: 480px; margin-left: auto; margin-right: auto;">Use our chatbot assistant or contact Sakshi directly for personalized level recommendations.</p>
+      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <a href="/contact" class="btn btn-primary">Get Personal Guidance</a>
+        <a href="/exams" class="btn btn-secondary">Browse Exam Directory</a>
+      </div>
     </div>
   </div>
 </section>

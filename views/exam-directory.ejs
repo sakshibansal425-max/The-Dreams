@@ -1,16 +1,19 @@
 <%- include('partials/header') %>
 
-<section class="section section-dark" style="padding-top: 140px;">
-  <div class="container">
-    <div class="section-heading">
-      <span class="kicker">DATABASE SEARCH & FILTER</span>
-      <h1>Government Exam Directory</h1>
-      <p>Filter by qualification, category, or search keywords to find your perfect exam target.</p>
-    </div>
+<!-- Hero Banner -->
+<section class="section section-dark" style="padding-top: 140px; padding-bottom: 80px;">
+  <div class="container" style="max-width: 900px;">
+    <span class="kicker">EXAM DIRECTORY</span>
+    <h1 style="margin: 12px 0 16px;">Government Exam Directory</h1>
+    <p style="font-size: 1.05rem; max-width: 620px;">Filter by qualification, category, or keyword to find the right government exam for your profile.</p>
+  </div>
+</section>
 
-    <!-- Filter Control Bar -->
-    <div class="card" style="margin-bottom: 48px; padding: 24px;">
-      <form action="/exams" method="GET" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) 120px; gap: 16px; align-items: end;">
+<!-- Filter Bar -->
+<section class="section-secondary" style="padding: 32px 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+  <div class="container">
+    <form action="/exams" method="GET">
+      <div style="display: grid; grid-template-columns: 1fr 1fr 2fr auto; gap: 14px; align-items: flex-end;">
         <div>
           <label class="form-label" for="category">Category</label>
           <select name="category" id="category" class="form-control">
@@ -31,52 +34,69 @@
 
         <div>
           <label class="form-label" for="search">Keyword Search</label>
-          <input type="text" name="search" id="search" class="form-control" placeholder="Search exam name..." value="<%= searchQuery %>">
+          <input type="text" name="search" id="search" class="form-control" placeholder="Search exam name or code..." value="<%= searchQuery %>">
         </div>
 
         <div>
-          <button type="submit" class="btn btn-primary" style="width: 100%; height: 48px;">Filter</button>
+          <button type="submit" class="btn btn-primary w-full" style="height: 46px;">Filter</button>
         </div>
-      </form>
-    </div>
+      </div>
 
-    <!-- Exam Cards Grid -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px;">
-      <% if (exams && exams.length > 0) { %>
+      <!-- Active filter tags -->
+      <% if (selectedCategory !== 'All' || selectedQualification !== 'All' || searchQuery) { %>
+        <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; align-items: center;">
+          <span style="font-size: 0.78rem; color: var(--color-text-muted); font-family: var(--font-mono);">ACTIVE FILTERS:</span>
+          <% if (selectedCategory !== 'All') { %><span class="badge"><%= selectedCategory %></span><% } %>
+          <% if (selectedQualification !== 'All') { %><span class="badge"><%= selectedQualification %> Pass</span><% } %>
+          <% if (searchQuery) { %><span class="badge">"<%= searchQuery %>"</span><% } %>
+          <a href="/exams" class="btn btn-ghost" style="padding: 2px 8px; font-size: 0.75rem; margin-left: 4px;">Clear All ×</a>
+        </div>
+      <% } %>
+    </form>
+  </div>
+</section>
+
+<!-- Exam Cards -->
+<section class="section section-dark" style="padding-top: 48px; padding-bottom: 80px;">
+  <div class="container">
+    <% if (exams && exams.length > 0) { %>
+      <p style="font-size: 0.82rem; color: var(--color-text-muted); font-family: var(--font-mono); margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.1em;">
+        <%= exams.length %> exam<%= exams.length !== 1 ? 's' : '' %> found
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
         <% exams.forEach(exam => { %>
-          <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                <span class="badge"><%= exam.category %></span>
-                <span class="badge badge-outline"><%= exam.minQualification %> Pass</span>
-              </div>
-              <h3 style="margin-bottom: 8px; font-size: 1.3rem;"><%= exam.name %></h3>
-              <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-accent); margin-bottom: 16px;">CODE: <%= exam.code %></p>
-              <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px;"><%= exam.description %></p>
-              
-              <% if (exam.examPosts && exam.examPosts.length > 0) { %>
-                <div style="margin-bottom: 20px; font-size: 0.85rem;">
-                  <strong style="color: var(--color-text-primary);">Posts:</strong>
-                  <span style="color: var(--color-text-secondary);"><%= exam.examPosts.slice(0, 3).map(p => p.postName).join(', ') %><%= exam.examPosts.length > 3 ? '...' : '' %></span>
-                </div>
-              <% } %>
+          <div class="card" style="display: flex; flex-direction: column; padding: 28px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 14px;">
+              <span class="badge"><%= exam.category %></span>
+              <span class="badge badge-outline"><%= exam.minQualification %> Pass</span>
             </div>
 
-            <div style="border-top: 1px solid var(--color-border); padding-top: 16px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
-              <span style="color: var(--color-text-secondary);"><%= exam.frequency %></span>
-              <a href="/exams/<%= exam.code %>" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.8rem;">View Full Guide &rarr;</a>
+            <p style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--color-accent); letter-spacing: 0.08em; margin-bottom: 8px;"><%= exam.code %></p>
+            <h3 style="font-size: 1.1rem; margin-bottom: 10px; line-height: 1.3;"><%= exam.name %></h3>
+            <p style="font-size: 0.875rem; line-height: 1.65; flex: 1; margin-bottom: 18px;"><%= exam.description.substring(0, 130) %>...</p>
+
+            <% if (exam.examPosts && exam.examPosts.length > 0) { %>
+              <p style="font-size: 0.78rem; color: var(--color-text-muted); margin-bottom: 16px;">
+                <span style="color: var(--color-text-secondary); font-weight: 500;">Posts: </span>
+                <%= exam.examPosts.slice(0,2).map(p => p.postName).join(', ') %><%= exam.examPosts.length > 2 ? ` +${exam.examPosts.length - 2} more` : '' %>
+              </p>
+            <% } %>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-border); padding-top: 14px; margin-top: auto;">
+              <span style="font-size: 0.75rem; color: var(--color-text-muted); font-family: var(--font-mono);"><%= exam.frequency %></span>
+              <a href="/exams/<%= exam.code %>" class="btn btn-primary" style="padding: 7px 16px; font-size: 0.78rem;">View Guide &rarr;</a>
             </div>
           </div>
         <% }) %>
-      <% } else { %>
-        <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 64px 24px;">
-          <div style="font-size: 2.5rem; margin-bottom: 16px;">🔍</div>
-          <h3>No Exams Found</h3>
-          <p style="margin-bottom: 24px;">No exams matched your selected filters or search query.</p>
-          <a href="/exams" class="btn btn-secondary">Reset Filters &rarr;</a>
-        </div>
-      <% } %>
-    </div>
+      </div>
+    <% } else { %>
+      <div class="card text-center" style="padding: 80px 32px; max-width: 500px; margin: 0 auto;">
+        <div style="font-size: 2.5rem; margin-bottom: 16px;">🔍</div>
+        <h3 style="margin-bottom: 10px;">No Exams Found</h3>
+        <p style="margin-bottom: 28px;">No exams match your current filters. Try adjusting your search criteria.</p>
+        <a href="/exams" class="btn btn-secondary">Reset All Filters</a>
+      </div>
+    <% } %>
   </div>
 </section>
 

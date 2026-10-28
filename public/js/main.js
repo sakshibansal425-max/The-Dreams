@@ -10,8 +10,29 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         navbar.classList.remove('scrolled');
       }
-    });
+    }, { passive: true });
   }
+
+  // 2. Mobile Nav Hamburger Drawer
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileNav    = document.getElementById('mobileNav');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+  const mobileNavClose = document.getElementById('mobileNavClose');
+
+  const openMobileNav = () => {
+    mobileNav?.classList.add('open');
+    mobileOverlay?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeMobileNav = () => {
+    mobileNav?.classList.remove('open');
+    mobileOverlay?.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  hamburgerBtn?.addEventListener('click', openMobileNav);
+  mobileNavClose?.addEventListener('click', closeMobileNav);
+  mobileOverlay?.addEventListener('click', closeMobileNav);
 
   // 2. Parallax Scroll Motion
   const parallaxBg = document.querySelector('.hero-bg-layer');

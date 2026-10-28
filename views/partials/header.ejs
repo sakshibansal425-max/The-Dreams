@@ -7,6 +7,7 @@
   <meta name="description" content="Premium monochromatic guide for 10th, 12th pass and graduate students preparing for Indian government exams (SSC, UPSC, Railways, Banking, Punjab Police, PPSC, PSSSB).">
   
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
 
   <% if (typeof gaMeasurementId !== 'undefined' && gaMeasurementId && gaMeasurementId !== 'G-MEASUREMENT_ID_PLACEHOLDER') { %>
     <!-- Google Analytics (GA4) -->
@@ -30,14 +31,37 @@
       <nav>
         <ul class="nav-links">
           <li><a href="/" class="<%= currentPage === 'home' ? 'active' : '' %>">Home</a></li>
-          <li><a href="/exams" class="<%= currentPage === 'exams' ? 'active' : '' %>">Exams Directory</a></li>
+          <li><a href="/exams" class="<%= currentPage === 'exams' ? 'active' : '' %>">Exams</a></li>
           <li><a href="/prep-levels" class="<%= currentPage === 'prep-levels' ? 'active' : '' %>">Prep Levels</a></li>
           <li><a href="/services" class="<%= currentPage === 'services' ? 'active' : '' %>">Services</a></li>
-          <li><a href="/about" class="<%= currentPage === 'about' ? 'active' : '' %>">About Us</a></li>
+          <li><a href="/about" class="<%= currentPage === 'about' ? 'active' : '' %>">About</a></li>
           <li><a href="/about-me" class="<%= currentPage === 'about-me' ? 'active' : '' %>">About Me</a></li>
-          <li><a href="/contact" class="btn btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">Contact</a></li>
+          <li><a href="/contact" class="btn btn-primary" style="padding: 8px 18px; font-size: 0.82rem;">Contact</a></li>
         </ul>
       </nav>
+
+      <!-- Hamburger (mobile only) -->
+      <button class="nav-hamburger" id="hamburgerBtn" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
+
+  <!-- Mobile Overlay -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- Mobile Nav Drawer -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <div class="mobile-nav-close">
+      <button id="mobileNavClose" aria-label="Close menu">✕</button>
+    </div>
+    <a href="/" class="<%= currentPage === 'home' ? 'active' : '' %>">Home</a>
+    <a href="/exams" class="<%= currentPage === 'exams' ? 'active' : '' %>">Exams Directory</a>
+    <a href="/prep-levels" class="<%= currentPage === 'prep-levels' ? 'active' : '' %>">Prep Levels</a>
+    <a href="/services" class="<%= currentPage === 'services' ? 'active' : '' %>">Services</a>
+    <a href="/about" class="<%= currentPage === 'about' ? 'active' : '' %>">About Us</a>
+    <a href="/about-me" class="<%= currentPage === 'about-me' ? 'active' : '' %>">About Me</a>
+    <a href="/contact" class="<%= currentPage === 'contact' ? 'active' : '' %>" style="color: var(--color-accent); font-weight: 600;">Contact</a>
+  </nav>
+
   <main>

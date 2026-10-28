@@ -63,14 +63,16 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 6. Start Server
+// 6. Start Server (Only start listener if executed directly)
 const PORT = env.port;
-app.listen(PORT, () => {
-  console.log(`=================================================`);
-  console.log(`🚀 The Dreams Server running on http://localhost:${PORT}`);
-  console.log(`🩺 Health Check: http://localhost:${PORT}/health`);
-  console.log(`🔑 Admin Login: http://localhost:${PORT}/admin/login`);
-  console.log(`=================================================`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`=================================================`);
+    console.log(`🚀 The Dreams Server running on http://localhost:${PORT}`);
+    console.log(`🩺 Health Check: http://localhost:${PORT}/health`);
+    console.log(`🔑 Admin Login: http://localhost:${PORT}/admin/login`);
+    console.log(`=================================================`);
+  });
+}
 
 module.exports = app;
